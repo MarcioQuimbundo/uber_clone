@@ -1,4 +1,4 @@
-package com.example.uberrider;
+package com.example.uber_rider;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
