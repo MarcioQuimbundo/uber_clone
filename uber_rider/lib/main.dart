@@ -35,13 +35,68 @@ class _MyHomePageState extends State<MyHomePage> {
     bearing: 192.8334901395799,
     tilt: 59.440717697143555,
   );
+
+  static final CameraPosition _iniCameraPosition = CameraPosition(
+    target: LatLng(40.7128, -74.0060),
+    zoom: 16.0,
+    bearing: 192.8334901395799,
+    tilt: 59.440717697143555,
+  );
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> _initCameraPosition() async {
+    final GoogleMapController controller = await _controller.future;
+    controller
+        .animateCamera(CameraUpdate.newCameraPosition(_iniCameraPosition));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(child: Container(
-        color: Colors.black,
-      ),),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: Colors.black),
+              accountName: Text("Márcio Quimbundo"),
+              accountEmail: Row(
+                children: <Widget>[
+                  Text("5.0"),
+                  Icon(
+                    Icons.star,
+                    color: Colors.white,
+                    size: 12,
+                  )
+                ],
+              ),
+              currentAccountPicture: ClipOval(
+                child: Image.asset(
+                  "assets/images/user_profile.jpg",
+                  width: 10,
+                  height: 10,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  linkMenuDrawer('Payment'),
+                  linkMenuDrawer('Your Trips'),
+                  linkMenuDrawer('Free Rides'),
+                  linkMenuDrawer('Help'),
+                  linkMenuDrawer('Settings'),
+                  Divider(color: Colors.black45,),
+                  linkMenuDrawer('Drive With Uber'),
+                  linkMenuDrawer('Legal'),
+                ]),
+          ],
+        ),
+      ),
       body: Stack(
         children: <Widget>[
           GoogleMap(
@@ -49,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             initialCameraPosition: _cameraPosition,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
+              _initCameraPosition();
             },
           ),
           Positioned(
@@ -97,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 FunctionalButton(
                   icon: Icons.work,
                   title: "Work",
-                  onPressed: () {},
+                  onPressed: _initCameraPosition,
                 ),
                 FunctionalButton(
                   icon: Icons.home,
@@ -162,4 +218,19 @@ class _FunctionalButtonState extends State<FunctionalButton> {
       ],
     );
   }
+}
+
+Widget linkMenuDrawer(String title) {
+  return InkWell(
+    onTap: () {},
+    splashColor: Colors.black,
+    child: Container(
+      padding: EdgeInsets.symmetric(vertical: 13, horizontal: 15),
+      width: double.infinity,
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 15.0),
+      ),
+    ),
+  );
 }
