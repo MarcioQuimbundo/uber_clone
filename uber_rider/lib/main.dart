@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uber_rider/src/ui/add_payment_method.dart';
+import 'package:uber_rider/src/ui/payment.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +14,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Uber Clone'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(title: 'Uber Clone'),
+        '/payment': (context) => PaymentPage(),
+        '/add_payment': (context) => AddPaymentMethodPage(),
+      },
     );
   }
 }
@@ -85,14 +92,16 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  linkMenuDrawer('Payment'),
-                  linkMenuDrawer('Your Trips'),
-                  linkMenuDrawer('Free Rides'),
-                  linkMenuDrawer('Help'),
-                  linkMenuDrawer('Settings'),
-                  Divider(color: Colors.black45,),
-                  linkMenuDrawer('Drive With Uber'),
-                  linkMenuDrawer('Legal'),
+                  linkMenuDrawer('Payment', () {Navigator.pushNamed(context, '/payment');}),
+                  linkMenuDrawer('Your Trips', () {}),
+                  linkMenuDrawer('Free Rides', () {}),
+                  linkMenuDrawer('Help', () {}),
+                  linkMenuDrawer('Settings', () {}),
+                  Divider(
+                    color: Colors.black45,
+                  ),
+                  linkMenuDrawer('Drive With Uber', () {}),
+                  linkMenuDrawer('Legal', () {}),
                 ]),
           ],
         ),
@@ -220,9 +229,9 @@ class _FunctionalButtonState extends State<FunctionalButton> {
   }
 }
 
-Widget linkMenuDrawer(String title) {
+Widget linkMenuDrawer(String title, Function onPressed) {
   return InkWell(
-    onTap: () {},
+    onTap: onPressed,
     splashColor: Colors.black,
     child: Container(
       padding: EdgeInsets.symmetric(vertical: 13, horizontal: 15),

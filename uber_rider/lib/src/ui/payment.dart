@@ -17,7 +17,8 @@ class _PaymentViewState extends State<PaymentView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
+        title: Text("Payment"),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -26,25 +27,57 @@ class _PaymentViewState extends State<PaymentView> {
         child: ListView(
           padding: EdgeInsets.only(left: 20),
           children: <Widget>[
-            Text("Payment Methods"),
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 26),
+                child: Text(
+                  "Payment Methods",
+                  style: TextStyle(color: Colors.grey),
+                )),
             Row(
               children: <Widget>[
                 Icon(Icons.payment),
+                SizedBox(
+                  width: 10,
+                ),
                 Text("Paypal"),
               ],
             ),
-            Text("Add Payment Method"),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {Navigator.pushNamed(context, '/add_payment');},
+                child: Text(
+              "Add Payment Method",
+              style: TextStyle(color: Colors.blue),
+            )),
             Divider(),
-            Text("Promotions"),
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  "Promotions",
+                  style: TextStyle(color: Colors.grey),
+                )),
             Row(
               children: <Widget>[
                 Icon(Icons.card_giftcard),
+                SizedBox(
+                  width: 10,
+                ),
                 Text("Rewards"),
                 Spacer(),
                 Text("1"),
               ],
             ),
-            Text("Add Promo/Gift Code"),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {print("Payment Method");},
+                child: Text(
+              "Add Promo/Gift Code",
+              style: TextStyle(color: Colors.blue),
+            )),
           ],
         ),
       ),
