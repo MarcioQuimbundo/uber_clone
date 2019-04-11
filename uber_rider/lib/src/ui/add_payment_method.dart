@@ -35,7 +35,7 @@ class _AddPaymentMethodViewState extends State<AddPaymentMethodView> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text("Credit or Debit Card"),
+                  GestureDetector(onTap: () {Navigator.pushNamed(context, "/add_card");}, child: Text("Credit or Debit Card")),
                 ],
               ),
             ),

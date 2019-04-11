@@ -67,6 +67,7 @@ class _PaymentViewState extends State<PaymentView> {
                 Text("Rewards"),
                 Spacer(),
                 Text("1"),
+                SizedBox(width: 20,)
               ],
             ),
             SizedBox(

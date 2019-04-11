@@ -13,6 +13,21 @@ class AddCardView extends StatefulWidget {
 }
 
 class _AddCardViewState extends State<AddCardView> {
+  DateTime selectedDate = DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2019, 04),
+      lastDate: DateTime(2030)
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+       selectedDate = picked; 
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +40,18 @@ class _AddCardViewState extends State<AddCardView> {
           color: Colors.white,
         ),
         child: ListView(
-          padding: EdgeInsets.only(left: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           children: <Widget>[
+            TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.credit_card), labelText: "Card Number")),
+            Row(
+              children: <Widget>[
+                Flexible(child: TextField(decoration: InputDecoration(hintText: "MM/YY"))),
+                SizedBox(width: 40),
+                Flexible(child: TextField(decoration: InputDecoration(hintText: "CVV"))),
+              ],
+            ),
+            TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.credit_card), labelText: "Country")),
+            TextField(decoration: InputDecoration(prefixIcon: Icon(Icons.credit_card), labelText: "Zip Code")),
           ],
         ),
       ),

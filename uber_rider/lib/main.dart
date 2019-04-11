@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uber_rider/src/ui/add_card.dart';
 import 'package:uber_rider/src/ui/add_payment_method.dart';
 import 'package:uber_rider/src/ui/payment.dart';
 
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Uber Clome',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => MyHomePage(title: 'Uber Clone'),
         '/payment': (context) => PaymentPage(),
         '/add_payment': (context) => AddPaymentMethodPage(),
+        '/add_card': (context) => AddCardPage(),
       },
     );
   }
