@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uber_rider/src/ui/add_card.dart';
 import 'package:uber_rider/src/ui/add_payment_method.dart';
 import 'package:uber_rider/src/ui/payment.dart';
+import 'package:uber_rider/src/ui/select_issue.dart';
+import 'package:uber_rider/src/ui/your_trip.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +24,8 @@ class MyApp extends StatelessWidget {
         '/payment': (context) => PaymentPage(),
         '/add_payment': (context) => AddPaymentMethodPage(),
         '/add_card': (context) => AddCardPage(),
+        '/your_trip': (context) => YourTripPage(),
+        '/select_issue': (context) => SelectIssuePage(),
       },
     );
   }
@@ -37,30 +41,163 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  _MyHomePageState();
+
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
   Completer<GoogleMapController> _controller = Completer();
+  Map<PolylineId, Polyline> polylines = <PolylineId, Polyline>{};
+  int _polylineIdCounter = 1;
+  PolylineId selectedPolyline;
+
+  // Values when toggling polyline color
+  int colorsIndex = 0;
+  List<Color> colors = <Color>[
+    Colors.purple,
+    Colors.red,
+    Colors.green,
+    Colors.pink,
+  ];
+
+  // Values when toggling polyline width
+  int widthsIndex = 0;
+  List<int> widths = <int>[10, 20, 5];
+
+  int jointTypesIndex = 0;
+  List<JointType> jointTypes = <JointType>[
+    JointType.mitered,
+    JointType.bevel,
+    JointType.round
+  ];
+
+  // Values when toggling polyline end cap type
+  int endCapsIndex = 0;
+  List<Cap> endCaps = <Cap>[Cap.buttCap, Cap.squareCap, Cap.roundCap];
+
+  // Values when toggling polyline start cap type
+  int startCapsIndex = 0;
+  List<Cap> startCaps = <Cap>[Cap.buttCap, Cap.squareCap, Cap.roundCap];
+
+  // Values when toggling polyline pattern
+  int patternsIndex = 0;
+  List<List<PatternItem>> patterns = <List<PatternItem>>[
+    <PatternItem>[],
+    <PatternItem>[
+      PatternItem.dash(30.0),
+      PatternItem.gap(20.0),
+      PatternItem.dot,
+      PatternItem.gap(20.0)
+    ],
+    <PatternItem>[PatternItem.dash(30.0), PatternItem.gap(20.0)],
+    <PatternItem>[PatternItem.dot, PatternItem.gap(10.0)],
+  ];
+
+  //GoogleMapController _mapController;
+
   static final CameraPosition _cameraPosition = CameraPosition(
-    target: LatLng(40.7128, -74.0060),
-    zoom: 16.0,
-    bearing: 192.8334901395799,
-    tilt: 59.440717697143555,
+    target: LatLng(-8.913025, 13.202462),
+    zoom: 17.0,
   );
 
-  static final CameraPosition _iniCameraPosition = CameraPosition(
-    target: LatLng(40.7128, -74.0060),
-    zoom: 16.0,
-    bearing: 192.8334901395799,
-    tilt: 59.440717697143555,
-  );
   @override
   void initState() {
+    //_mapController.mar();
     super.initState();
   }
 
-  Future<void> _initCameraPosition() async {
+  void _onPolylineTapped(PolylineId polylineId) {
+    setState(() {
+      selectedPolyline = polylineId;
+    });
+  }
+
+  void _addHomePoly() {
+    _homeCameraPosition();
+    final String polylineIdVal = 'polyline_id_$_polylineIdCounter';
+    _polylineIdCounter++;
+    final PolylineId polylineId = PolylineId(polylineIdVal);
+
+    final Polyline polyline = Polyline(
+      polylineId: polylineId,
+      consumeTapEvents: true,
+      color: Colors.black,
+      width: 5,
+      points: _createHomePoints(),
+      onTap: () {
+        _onPolylineTapped(polylineId);
+      },
+    );
+
+    setState(() {
+      polylines[polylineId] = polyline;
+    });
+  }
+
+  void _addGymPoly() {
+    _gymCameraPosition();
+    final String polylineIdVal = 'polyline_id_$_polylineIdCounter';
+    _polylineIdCounter++;
+    final PolylineId polylineId = PolylineId(polylineIdVal);
+
+    final Polyline polyline = Polyline(
+      polylineId: polylineId,
+      consumeTapEvents: true,
+      color: Colors.black,
+      width: 5,
+      points: _createGymPoints(),
+      onTap: () {
+        _onPolylineTapped(polylineId);
+      },
+    );
+
+    setState(() {
+      polylines[polylineId] = polyline;
+    });
+  }
+
+  void _addWorkPoly() {
+    _workCameraPosition();
+    final String polylineIdVal = 'polyline_id_$_polylineIdCounter';
+    _polylineIdCounter++;
+    final PolylineId polylineId = PolylineId(polylineIdVal);
+
+    final Polyline polyline = Polyline(
+      polylineId: polylineId,
+      consumeTapEvents: true,
+      color: Colors.black,
+      width: 5,
+      points: _createWorkPoints(),
+      onTap: () {
+        _onPolylineTapped(polylineId);
+      },
+    );
+
+    setState(() {
+      polylines[polylineId] = polyline;
+    });
+  }
+
+  Future<void> _homeCameraPosition() async {
     final GoogleMapController controller = await _controller.future;
-    controller
-        .animateCamera(CameraUpdate.newCameraPosition(_iniCameraPosition));
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(-8.913394, 13.202649),
+      zoom: 18.10,
+    )));
+  }
+
+  Future<void> _gymCameraPosition() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(-8.912014, 13.204197),
+      zoom: 18.5,
+    )));
+  }
+
+  Future<void> _workCameraPosition() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(-8.914843, 13.201518),
+      zoom: 18.5,
+    )));
   }
 
   @override
@@ -95,9 +232,15 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  linkMenuDrawer('Payment', () {Navigator.pushNamed(context, '/payment');}),
-                  linkMenuDrawer('Your Trips', () {}),
-                  linkMenuDrawer('Free Rides', () {}),
+                  linkMenuDrawer('Payment', () {
+                    Navigator.pushNamed(context, '/payment');
+                  }),
+                  linkMenuDrawer('Your Trips', () {
+                    Navigator.pushNamed(context, '/your_trip');
+                  }),
+                  linkMenuDrawer('Free Rides', () {
+                    Navigator.pushNamed(context, '/select_issue');
+                  }),
                   linkMenuDrawer('Help', () {}),
                   linkMenuDrawer('Settings', () {}),
                   Divider(
@@ -112,11 +255,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
+            polylines: Set<Polyline>.of(polylines.values),
             mapType: MapType.normal,
             initialCameraPosition: _cameraPosition,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
-              _initCameraPosition();
+              //_initCameraPosition();
             },
           ),
           Positioned(
@@ -157,32 +301,73 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               )),
           Positioned(
-            bottom: 15,
-            right: 25.0,
-            left: 25.0,
-            child: Row(
-              children: <Widget>[
-                FunctionalButton(
-                  icon: Icons.work,
-                  title: "Work",
-                  onPressed: _initCameraPosition,
-                ),
-                FunctionalButton(
-                  icon: Icons.home,
-                  title: "Home",
-                  onPressed: () {},
-                ),
-                FunctionalButton(
-                  icon: Icons.timer,
-                  title: "Zinc Gym",
-                  onPressed: () {},
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  FunctionalButton(
+                    icon: Icons.work,
+                    title: "Work",
+                    onPressed: _addWorkPoly,
+                  ),
+                  FunctionalButton(
+                    icon: Icons.home,
+                    title: "Home",
+                    onPressed: _addHomePoly,
+                  ),
+                  FunctionalButton(
+                    icon: Icons.timer,
+                    title: "Zinc Gym",
+                    onPressed: _addGymPoly,
+                  ),
+                ],
+              ),
             ),
           )
         ],
       ),
     );
+  }
+
+  LatLng _createLatLng(double lat, double lng) {
+    return LatLng(lat, lng);
+  }
+
+  List<LatLng> _createHomePoints() {
+    final List<LatLng> points = <LatLng>[];
+    points.add(_createLatLng(-8.913012, 13.202450));
+    points.add(_createLatLng(-8.913297, 13.202253));
+    points.add(_createLatLng(-8.913752, 13.202803));
+    points.add(_createLatLng(-8.913455, 13.203063));
+    points.add(_createLatLng(-8.913012, 13.202450));
+    return points;
+  }
+
+  List<LatLng> _createGymPoints() {
+    final List<LatLng> points = <LatLng>[];
+    points.add(_createLatLng(-8.911857, 13.203656));
+    points.add(_createLatLng(-8.911580, 13.204369));
+    points.add(_createLatLng(-8.912060, 13.204649));
+    points.add(_createLatLng(-8.912406, 13.204128));
+    points.add(_createLatLng(-8.911857, 13.203656));
+    return points;
+  }
+
+  List<LatLng> _createWorkPoints() {
+    final List<LatLng> points = <LatLng>[];
+    points.add(_createLatLng(-8.914580, 13.202106));
+    points.add(_createLatLng(-8.915066, 13.201708));
+    points.add(_createLatLng(-8.915269, 13.201441));
+    points.add(_createLatLng(-8.915345, 13.201232));
+    points.add(_createLatLng(-8.915301, 13.201075));
+    points.add(_createLatLng(-8.915058, 13.200855));
+    points.add(_createLatLng(-8.914824, 13.201195));
+    points.add(_createLatLng(-8.914180, 13.201826));
+    points.add(_createLatLng(-8.914580, 13.202106));
+
+    return points;
   }
 }
 

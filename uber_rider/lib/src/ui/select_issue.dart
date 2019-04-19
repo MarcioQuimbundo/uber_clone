@@ -4,19 +4,19 @@ import 'dart:async';
 
 
 
-class YourTripPage extends StatelessWidget {
+class SelectIssuePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return YourTripView();
+    return SelectIssueView();
   }
 }
 
-class YourTripView extends StatefulWidget {
+class SelectIssueView extends StatefulWidget {
   @override
-  _YourTripViewState createState() => _YourTripViewState();
+  _SelectIssueViewState createState() => _SelectIssueViewState();
 }
 
-class _YourTripViewState extends State<YourTripView> {
+class _SelectIssueViewState extends State<SelectIssueView> {
   
   Completer<GoogleMapController> _controller = Completer();
   static final CameraPosition _cameraPosition = CameraPosition(
@@ -50,8 +50,16 @@ class _YourTripViewState extends State<YourTripView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text("Your Trips"),
-        
+        title: Text("Select an Issue"),
+        actions: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(padding: EdgeInsets.only(right: 10), child: Text("RECEIPT", style: TextStyle(color: Colors.white),))
+            ],
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -59,16 +67,13 @@ class _YourTripViewState extends State<YourTripView> {
             height: 150,
             width: double.infinity,
             child: GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: _cameraPosition,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                  _initCameraPosition();
-                },
-                onTap: (LatLng location) {
-                  Navigator.pushNamed(context, "/select_issue");
-                },
-              ),
+              mapType: MapType.normal,
+              initialCameraPosition: _cameraPosition,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+                _initCameraPosition();
+              },
+            ),
           ),
           SizedBox(height: 20,),
           Container(
