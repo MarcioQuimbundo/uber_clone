@@ -19,28 +19,51 @@ class YourTripView extends StatefulWidget {
 class _YourTripViewState extends State<YourTripView> {
   
   Completer<GoogleMapController> _controller = Completer();
+  Map<PolylineId, Polyline> polylines = <PolylineId, Polyline>{};
+  int _polylineIdCounter = 1;
   static final CameraPosition _cameraPosition = CameraPosition(
-    target: LatLng(40.7128, -74.0060),
-    zoom: 16.0,
-    bearing: 192.8334901395799,
-    tilt: 59.440717697143555,
+    target: LatLng(-8.913455, 13.203063),
+    zoom: 17.18,
   );
 
-  static final CameraPosition _iniCameraPosition = CameraPosition(
-    target: LatLng(40.7128, -74.0060),
-    zoom: 16.0,
-    bearing: 192.8334901395799,
-    tilt: 59.440717697143555,
-  );
   @override
   void initState() {
     super.initState();
+    _addtripPoly();
   }
 
-  Future<void> _initCameraPosition() async {
-    final GoogleMapController controller = await _controller.future;
-    controller
-        .animateCamera(CameraUpdate.newCameraPosition(_iniCameraPosition));
+  void _addtripPoly() {
+    final String polylineIdVal = 'polyline_id_$_polylineIdCounter';
+    _polylineIdCounter++;
+    final PolylineId polylineId = PolylineId(polylineIdVal);
+
+    final Polyline polyline = Polyline(
+      polylineId: polylineId,
+      consumeTapEvents: true,
+      color: Colors.black,
+      width: 5,
+      points: _createTripPoints(),
+      onTap: () {
+        
+      },
+    );
+
+    setState(() {
+      polylines[polylineId] = polyline;
+    });
+  }
+
+  LatLng _createLatLng(double lat, double lng) {
+    return LatLng(lat, lng);
+  }
+
+  List<LatLng> _createTripPoints() {
+    final List<LatLng> points = <LatLng>[];
+    points.add(_createLatLng(-8.913012, 13.202450));
+    points.add(_createLatLng(-8.913297, 13.202253));
+    points.add(_createLatLng(-8.913752, 13.202803));
+    points.add(_createLatLng(-8.913455, 13.203063));
+    return points;
   }
 
   DateTime selectedDate = DateTime.now();
@@ -59,11 +82,11 @@ class _YourTripViewState extends State<YourTripView> {
             height: 150,
             width: double.infinity,
             child: GoogleMap(
+              polylines: Set<Polyline>.of(polylines.values),
                 mapType: MapType.normal,
                 initialCameraPosition: _cameraPosition,
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
-                  _initCameraPosition();
                 },
                 onTap: (LatLng location) {
                   Navigator.pushNamed(context, "/select_issue");

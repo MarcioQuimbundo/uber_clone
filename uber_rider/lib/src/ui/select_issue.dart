@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 
-
-
 class SelectIssuePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,30 +15,50 @@ class SelectIssueView extends StatefulWidget {
 }
 
 class _SelectIssueViewState extends State<SelectIssueView> {
-  
   Completer<GoogleMapController> _controller = Completer();
+  Map<PolylineId, Polyline> polylines = <PolylineId, Polyline>{};
+  int _polylineIdCounter = 1;
   static final CameraPosition _cameraPosition = CameraPosition(
-    target: LatLng(40.7128, -74.0060),
-    zoom: 16.0,
-    bearing: 192.8334901395799,
-    tilt: 59.440717697143555,
+    target: LatLng(-8.913455, 13.203063),
+    zoom: 17.18,
   );
 
-  static final CameraPosition _iniCameraPosition = CameraPosition(
-    target: LatLng(40.7128, -74.0060),
-    zoom: 16.0,
-    bearing: 192.8334901395799,
-    tilt: 59.440717697143555,
-  );
   @override
   void initState() {
     super.initState();
+    _addtripPoly();
   }
 
-  Future<void> _initCameraPosition() async {
-    final GoogleMapController controller = await _controller.future;
-    controller
-        .animateCamera(CameraUpdate.newCameraPosition(_iniCameraPosition));
+  void _addtripPoly() {
+    final String polylineIdVal = 'polyline_id_$_polylineIdCounter';
+    _polylineIdCounter++;
+    final PolylineId polylineId = PolylineId(polylineIdVal);
+
+    final Polyline polyline = Polyline(
+      polylineId: polylineId,
+      consumeTapEvents: true,
+      color: Colors.black,
+      width: 5,
+      points: _createTripPoints(),
+      onTap: () {},
+    );
+
+    setState(() {
+      polylines[polylineId] = polyline;
+    });
+  }
+
+  LatLng _createLatLng(double lat, double lng) {
+    return LatLng(lat, lng);
+  }
+
+  List<LatLng> _createTripPoints() {
+    final List<LatLng> points = <LatLng>[];
+    points.add(_createLatLng(-8.913012, 13.202450));
+    points.add(_createLatLng(-8.913297, 13.202253));
+    points.add(_createLatLng(-8.913752, 13.202803));
+    points.add(_createLatLng(-8.913455, 13.203063));
+    return points;
   }
 
   DateTime selectedDate = DateTime.now();
@@ -48,58 +66,77 @@ class _SelectIssueViewState extends State<SelectIssueView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("Select an Issue"),
-        actions: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(padding: EdgeInsets.only(right: 10), child: Text("RECEIPT", style: TextStyle(color: Colors.white),))
-            ],
-          )
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: 150,
-            width: double.infinity,
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _cameraPosition,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-                _initCameraPosition();
-              },
-            ),
-          ),
-          SizedBox(height: 20,),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text("Select an Issue"),
+          actions: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text("Today at 1:05 AM", style: TextStyle(fontWeight: FontWeight.bold,)),
-                    Spacer(),
-                    Text("7.42USD", style: TextStyle(fontWeight: FontWeight.bold,)),
-                  ],
-                ),
-                SizedBox(height: 5,),
-                Row(
-                  children: <Widget>[
-                    Text("Infinity G Coupe"),
-                    SizedBox(width: 10,),
-                    Text("ABC123", style: TextStyle(fontWeight: FontWeight.bold,))
-                  ],
-                ),
+                Container(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Text(
+                      "RECEIPT",
+                      style: TextStyle(color: Colors.white),
+                    ))
               ],
+            )
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            Container(
+              height: 150,
+              width: double.infinity,
+              child: GoogleMap(
+                polylines: Set<Polyline>.of(polylines.values),
+                mapType: MapType.normal,
+                initialCameraPosition: _cameraPosition,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              ),
             ),
-          )
-        ],
-      )
-    );
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text("Today at 1:05 AM",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          )),
+                      Spacer(),
+                      Text("7.42USD",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text("Infinity G Coupe"),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("ABC123",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ))
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }
