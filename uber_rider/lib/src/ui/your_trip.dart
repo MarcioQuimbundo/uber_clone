@@ -102,7 +102,7 @@ class _YourTripViewState extends State<YourTripView> {
                   children: <Widget>[
                     Text("Today at 1:05 AM", style: TextStyle(fontWeight: FontWeight.bold,)),
                     Spacer(),
-                    Text("7.42USD", style: TextStyle(fontWeight: FontWeight.bold,)),
+                    Text("\$7.42", style: TextStyle(fontWeight: FontWeight.bold,)),
                   ],
                 ),
                 SizedBox(height: 5,),
