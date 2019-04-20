@@ -68,6 +68,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                                 FunctionalButton(
                                   icon: Icons.attach_money,
                                   title: "Earnings",
+                                  onPressed: ()=> Navigator.pushNamed(context, "/earnings"),
                                 ),
                                 ProfileButton(
                                   icon: Icons.star,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uber_driver/ui/earnings.dart';
 import 'package:uber_driver/ui/home.dart';
 import 'package:uber_driver/ui/notifications.dart';
 void main() => runApp(MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => MyHomePage(title: 'Uber Clone'),
         '/notifications': (context) => NotificationsPage(),
+        '/earnings': (context) => EarningsPage(),
       },
     );
   }
