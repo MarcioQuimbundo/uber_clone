@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uber_rider/src/ui/add_card.dart';
 import 'package:uber_rider/src/ui/add_payment_method.dart';
+import 'package:uber_rider/src/ui/free_rides.dart';
 import 'package:uber_rider/src/ui/payment.dart';
 import 'package:uber_rider/src/ui/select_issue.dart';
-import 'package:uber_rider/src/ui/your_trip.dart';
+import 'package:uber_rider/src/ui/your_trips.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/add_card': (context) => AddCardPage(),
         '/your_trip': (context) => YourTripPage(),
         '/select_issue': (context) => SelectIssuePage(),
+        '/free_rides': (context) => FreeRidesPage(),
       },
     );
   }
@@ -239,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.pushNamed(context, '/your_trip');
                   }),
                   linkMenuDrawer('Free Rides', () {
-                    Navigator.pushNamed(context, '/select_issue');
+                    Navigator.pushNamed(context, '/free_rides');
                   }),
                   linkMenuDrawer('Help', () {}),
                   linkMenuDrawer('Settings', () {}),
