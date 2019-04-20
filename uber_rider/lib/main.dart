@@ -7,6 +7,7 @@ import 'package:uber_rider/src/ui/free_rides.dart';
 import 'package:uber_rider/src/ui/help.dart';
 import 'package:uber_rider/src/ui/payment.dart';
 import 'package:uber_rider/src/ui/select_issue.dart';
+import 'package:uber_rider/src/ui/settings.dart';
 import 'package:uber_rider/src/ui/your_trips.dart';
 
 void main() => runApp(MyApp());
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/select_issue': (context) => SelectIssuePage(),
         '/free_rides': (context) => FreeRidesPage(),
         '/help': (context) => HelpPage(),
+        '/settings': (context) => SettingsPage(),
       },
     );
   }
@@ -248,7 +250,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   linkMenuDrawer('Help', () {
                     Navigator.pushNamed(context, '/help');
                   }),
-                  linkMenuDrawer('Settings', () {}),
+                  linkMenuDrawer('Settings', () {
+                    Navigator.pushNamed(context, '/settings');
+                  }),
                   Divider(
                     color: Colors.black45,
                   ),
