@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       price: "0.00",
                       onPressed: () {},
                     ),
-                    ProfileWidget(),
+                    ProfileWidget(onPressed: () => Navigator.pushNamed(context, '/notifications'),),
                   ],
                 ),
               ),
@@ -222,21 +222,24 @@ class ProfileWidget extends StatefulWidget {
 class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.white, width: 4),
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey, blurRadius: 11, offset: Offset(3.0, 4.0))
-        ],
-      ),
-      child: ClipOval(
-        child: Image.asset(
-          "assets/images/user_profile.jpg",
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: widget.onPressed,
+          child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 4),
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey, blurRadius: 11, offset: Offset(3.0, 4.0))
+          ],
+        ),
+        child: ClipOval(
+          child: Image.asset(
+            "assets/images/user_profile.jpg",
+            width: 60,
+            height: 60,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
