@@ -15,8 +15,6 @@ class EarningsView extends StatefulWidget {
 const kExpandedHeight = 300.0;
 
 class _EarningsViewState extends State<EarningsView> {
-  ScrollController _scrollController;
-
   @override
   void initState() {
     super.initState();
@@ -48,10 +46,13 @@ class _EarningsViewState extends State<EarningsView> {
                           SizedBox(
                             width: 10,
                           ),
-                          Icon(
-                            Icons.keyboard_backspace,
-                            color: Colors.white,
-                            size: 28,
+                          IconButton(
+                            onPressed: ()=> Navigator.pop(context),
+                            icon: Icon(
+                              Icons.keyboard_backspace,
+                              color: Colors.white,
+                              size: 28,
+                            ),
                           ),
                           SizedBox(
                             width: 10,
@@ -110,7 +111,8 @@ class _EarningsViewState extends State<EarningsView> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: ListTile(
-                        onTap: ()=> Navigator.pushNamed(context, "/earnings_details"),
+                        onTap: () =>
+                            Navigator.pushNamed(context, "/earnings_details"),
                         title: Text("Earning Details",
                             style: TextStyle(fontSize: 20)),
                         subtitle: Container(
@@ -136,7 +138,8 @@ class _EarningsViewState extends State<EarningsView> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: ListTile(
-                        onTap: ()=> Navigator.pushNamed(context, "/recent_transations"),
+                        onTap: () =>
+                            Navigator.pushNamed(context, "/recent_transations"),
                         title: Text("Recent transactions",
                             style: TextStyle(fontSize: 20)),
                         subtitle: Container(
@@ -162,6 +165,8 @@ class _EarningsViewState extends State<EarningsView> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: ListTile(
+                        onTap: () =>
+                            Navigator.pushNamed(context, "/promotions"),
                         title:
                             Text("Promotions", style: TextStyle(fontSize: 20)),
                         subtitle: Container(
@@ -187,8 +192,6 @@ class _EarningsViewState extends State<EarningsView> {
                 ),
               ),
             ),
-          
-            
           ],
         ),
       ),

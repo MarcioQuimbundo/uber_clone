@@ -37,7 +37,10 @@ class _NotificationsViewState extends State<NotificationsView> {
                 pinned: true,
                 backgroundColor: Colors.black,
                 leading: GestureDetector(
-                  child: Icon(Icons.close, size: 35, color: Colors.white),
+                  child: IconButton(
+                    onPressed: ()=> Navigator.pop(context),
+                    icon: Icon(Icons.close, size: 28, color: Colors.white),
+                  ),
                 ),
                 actions: <Widget>[
                   Row(
@@ -46,7 +49,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                         "HELP",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      Icon(Icons.help, size: 35, color: Colors.white),
+                      Icon(Icons.help, size: 28, color: Colors.white),
                     ],
                   )
                 ],
@@ -81,6 +84,8 @@ class _NotificationsViewState extends State<NotificationsView> {
                                 FunctionalButton(
                                   icon: Icons.settings,
                                   title: "Account",
+                                  onPressed: () =>
+                                      Navigator.pushNamed(context, "/account"),
                                 ),
                               ],
                             ),
