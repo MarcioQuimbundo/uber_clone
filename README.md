@@ -1,9 +1,9 @@
 # UBER CLONE UI
 
-# Rider App
+### ScreenShots
+
 <img height="480px" style="margin-right:10px;" src="uber_rider/screenshot/riderApp.jpg"><br>
 
-# Driver App
 <img height="480px" style="margin-right:10px;" src="uber_rider/screenshot/riderApp.jpg"><br>
 
 ### Show some :heart: and star the repo to support the project
