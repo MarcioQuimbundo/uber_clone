@@ -1,6 +1,4 @@
-# netflix_clone_UI
-
-# Screenshots
+# UBER CLONE UI
 
 # Rider App
 <img height="480px" style="margin-right:10px;" src="uber_rider/screenshot/riderApp.jpg"><br>
