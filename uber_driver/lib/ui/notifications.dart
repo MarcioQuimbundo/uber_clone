@@ -68,9 +68,12 @@ class _NotificationsViewState extends State<NotificationsView> {
                                 FunctionalButton(
                                   icon: Icons.attach_money,
                                   title: "Earnings",
-                                  onPressed: ()=> Navigator.pushNamed(context, "/earnings"),
+                                  onPressed: () =>
+                                      Navigator.pushNamed(context, "/earnings"),
                                 ),
                                 ProfileButton(
+                                  onPressed: () =>
+                                      Navigator.pushNamed(context, "/profile"),
                                   icon: Icons.star,
                                   title: "Profile",
                                   rating: "4.88",
@@ -96,7 +99,7 @@ class _NotificationsViewState extends State<NotificationsView> {
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: ListView(
-                children: <Widget>[ 
+                children: <Widget>[
                   Padding(
                     padding: EdgeInsets.all(20),
                     child: Text(
@@ -106,100 +109,142 @@ class _NotificationsViewState extends State<NotificationsView> {
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Explore these safety features", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title: Text("Explore these safety features",
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.lightbulb_outline,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.lightbulb_outline, color: Colors.white, size: 40,),
                     ),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Free Instant Pay cashouts this week", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title: Text("Free Instant Pay cashouts this week",
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.warning,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.warning, color: Colors.white, size: 40,),
                     ),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Track your earnings", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title: Text("Track your earnings",
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.lightbulb_outline,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.lightbulb_outline, color: Colors.white, size: 40,),
                     ),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Follow the opportunity", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title: Text("Follow the opportunity",
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.lightbulb_outline,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.lightbulb_outline, color: Colors.white, size: 40,),
                     ),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Plan your day with ease the opportunity", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title: Text("Plan your day with ease the opportunity",
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.lightbulb_outline,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.lightbulb_outline, color: Colors.white, size: 40,),
                     ),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Your earnings are processed Tuesday at noon", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title: Text("Your earnings are processed Tuesday at noon",
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.attach_money,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.attach_money, color: Colors.white, size: 40,),
                     ),
                   ),
                   Divider(),
                   ListTile(
-                    title: Text("Welcome, Márcio", style: TextStyle(fontSize: 20)),
-                    subtitle: Container(margin: EdgeInsets.only(top: 10), child: Text("9/17/18, 3:54 PM", style: TextStyle(fontSize: 16))),
+                    title:
+                        Text("Welcome, Márcio", style: TextStyle(fontSize: 20)),
+                    subtitle: Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text("9/17/18, 3:54 PM",
+                            style: TextStyle(fontSize: 16))),
                     leading: Container(
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape: BoxShape.circle
+                          color: Colors.blue, shape: BoxShape.circle),
+                      child: Icon(
+                        Icons.person_pin,
+                        color: Colors.white,
+                        size: 40,
                       ),
-                      child: Icon(Icons.person_pin, color: Colors.white, size: 40,),
                     ),
                   ),
                 ],
@@ -278,68 +323,71 @@ class ProfileButton extends StatefulWidget {
 class _ProfileButtonState extends State<ProfileButton> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ClipOval(
-              child: Image.asset(
-                "assets/images/user_profile.jpg",
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.0),
-              child: Text(
-                widget.title,
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-        Positioned(
-          left: 14,
-          top: 75,
-          child: Container(
-            width: 70,
-            height: 30,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(50.0)),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(widget.rating,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(
-                  width: 5,
+    return GestureDetector(
+      onTap: widget.onPressed,
+      child: Stack(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ClipOval(
+                child: Image.asset(
+                  "assets/images/user_profile.jpg",
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
                 ),
-                Icon(
-                  widget.icon,
-                  color: Colors.black,
-                  size: 16,
-                )
-              ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.0),
+                child: Text(
+                  widget.title,
+                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              )
+            ],
+          ),
+          Positioned(
+            left: 14,
+            top: 75,
+            child: Container(
+              width: 70,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(widget.rating,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    widget.icon,
+                    color: Colors.black,
+                    size: 16,
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

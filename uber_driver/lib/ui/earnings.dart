@@ -110,6 +110,7 @@ class _EarningsViewState extends State<EarningsView> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: ListTile(
+                        onTap: ()=> Navigator.pushNamed(context, "/earnings_details"),
                         title: Text("Earning Details",
                             style: TextStyle(fontSize: 20)),
                         subtitle: Container(
@@ -135,6 +136,7 @@ class _EarningsViewState extends State<EarningsView> {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: ListTile(
+                        onTap: ()=> Navigator.pushNamed(context, "/recent_transations"),
                         title: Text("Recent transactions",
                             style: TextStyle(fontSize: 20)),
                         subtitle: Container(

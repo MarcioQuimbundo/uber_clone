@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:uber_driver/ui/earnings.dart';
+import 'package:uber_driver/ui/earnings_details.dart';
 import 'package:uber_driver/ui/home.dart';
 import 'package:uber_driver/ui/notifications.dart';
+import 'package:uber_driver/ui/profile.dart';
+import 'package:uber_driver/ui/recent_transactions.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -18,6 +21,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => MyHomePage(title: 'Uber Clone'),
         '/notifications': (context) => NotificationsPage(),
         '/earnings': (context) => EarningsPage(),
+        '/profile': (context) => ProfilePage(),
+        '/earnings_details': (context) => EarningsDetailsPage(),
+        '/recent_transations': (context) => RecentTransactionsPage(),
       },
     );
   }

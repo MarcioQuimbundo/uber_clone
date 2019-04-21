@@ -101,19 +101,22 @@ class _FreeRidesViewState extends State<FreeRidesView> {
               SizedBox(
                 height: 14,
               ),
-              Container(
-                    width: double.infinity,
-                    height: 60,
-                    margin: EdgeInsets.only(bottom: 10),
-                    alignment: FractionalOffset.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius:
-                          BorderRadius.all(const Radius.circular(4.0)),
+              GestureDetector(
+                onTap: (){},
+                              child: Container(
+                      width: double.infinity,
+                      height: 60,
+                      margin: EdgeInsets.only(bottom: 10),
+                      alignment: FractionalOffset.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(4.0)),
+                      ),
+                      child: Text('SEND INVITES',
+                          style: TextStyle(color: Colors.white, fontSize: 18)),
                     ),
-                    child: Text('SEND INVITES',
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ),
+              ),
             ],
           ),
         ));
