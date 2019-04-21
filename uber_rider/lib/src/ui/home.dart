@@ -268,6 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: TextField(
                 decoration: InputDecoration(
+                  icon: Container(margin: EdgeInsets.only(left: 20, top: 18), width: 10, height: 10, decoration: BoxDecoration(color: Colors.black)),
                   hintText: "Where to?",
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(left: 15.0, top: 16.0),
