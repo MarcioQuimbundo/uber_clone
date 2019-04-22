@@ -4,7 +4,7 @@
 
 <img src="uber_rider/screenshot/riderApp.jpg"><br>
 
-<img src="uber_driver/screeshot/driverApp.jpg"><br>
+<img src="uber_driver/screeshot/driverApp.png"><br>
 
 # Pull Requests
  I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request. 
