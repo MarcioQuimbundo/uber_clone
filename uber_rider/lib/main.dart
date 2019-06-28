@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: './',
       routes: {
-        '/': (context) => LoginPage(),//MyHomePage(title: 'Uber Clone'),
-        '/login': (context) => LoginPage(),
+        '/home': (context) => MyHomePage(title: 'Uber Clone'),
+        '/': (context) => LoginPage(),
         '/payment': (context) => PaymentPage(),
         '/add_payment': (context) => AddPaymentMethodPage(),
         '/add_card': (context) => AddCardPage(),

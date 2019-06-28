@@ -214,7 +214,9 @@ class FloatinButtonLogin extends StatelessWidget {
         opacity: isVisible ? 1 : 0,
         duration: Duration(milliseconds: 200),
         child: RawMaterialButton(
-          onPressed: (){},
+          onPressed: (){
+             Navigator.pushNamed(context, "/home");
+          },
           splashColor: Colors.white,
           fillColor: Colors.black,
           elevation: 15.0,
@@ -266,7 +268,7 @@ class CreateGetMoving extends StatelessWidget {
         opacity: isVisible ? 1 : 0,
         duration: Duration(milliseconds: 200),
         child: Text("Get moving with Uber",
-            style: TextStyle(fontSize: 34, fontWeight: FontWeight.w500)))
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500)))
     );
   }
 }
