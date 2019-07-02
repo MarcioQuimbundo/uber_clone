@@ -63,12 +63,12 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
               ),
               child: Stack(
                 children: <Widget>[
                   //MenuButton(),
                   _builtGetMoving(),
+                  _builtSocial(),
                   _builtFloatingButton(),
                   _builtCreateAccount(),
                   Padding(
@@ -76,12 +76,8 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        /*Text(
-                          "Get moving with Uber",
-                          style: TextStyle(fontSize: 30),
-                        ),*/
                         SizedBox(
-                          height: 30,
+                          height: 50,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -137,6 +133,11 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
       isVisible: _controller.status != AnimationStatus.completed,
     );
   }
+  Widget _builtSocial() {
+    return CreateSocialNetwork(
+      isVisible: _controller.status != AnimationStatus.completed,
+    );
+  }
 
   void _handleDragUpdate(DragUpdateDetails details) {
     _controller.value -= details.primaryDelta / maxHeight;
@@ -180,24 +181,6 @@ class Event {
 
   Event(this.assetName, this.title, this.date);
 }
-
-/*class SheetHeader extends StatelessWidget {
-  final double fontSize;
-  final double topMargin;
-
-  const SheetHeader(
-      {Key key, @required this.fontSize, @required this.topMargin})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-        top: topMargin,
-        left: 30,
-        child: Text("Get moving with Uber",
-            style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w500)));
-  }
-}*/
 
 class FloatinButtonLogin extends StatelessWidget {
   final double bottomMargin;
@@ -269,6 +252,24 @@ class CreateGetMoving extends StatelessWidget {
         duration: Duration(milliseconds: 200),
         child: Text("Get moving with Uber",
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500)))
+    );
+  }
+}
+
+class CreateSocialNetwork extends StatelessWidget {
+  final bool isVisible;
+
+  const CreateSocialNetwork({Key key, this.isVisible}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      bottom: 30,
+      left: 30,
+      child: AnimatedOpacity(
+        opacity: isVisible ? 1 : 0,
+        duration: Duration(milliseconds: 200),
+        child: GestureDetector(onTap: (){}, child: Text("Or connect with social", style: TextStyle(fontSize: 18, color: Colors.blue)))),
     );
   }
 }
