@@ -95,6 +95,7 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
                                   child: TextField(
                                       focusNode: focusNode,
                                       controller: textController,
+                                      keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
                                           labelText: "Enter your mobile number",
