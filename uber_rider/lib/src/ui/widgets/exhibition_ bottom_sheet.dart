@@ -11,6 +11,11 @@ class ExhibitionBottomSheet extends StatefulWidget {
   _ExhibitionBottomSheetState createState() => _ExhibitionBottomSheetState();
 }
 
+TextEditingController emailTextController;
+TextEditingController passwordTextController;
+FocusNode focusNode;
+FocusNode focusNodePassword;
+
 class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
@@ -29,22 +34,20 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
     super.initState();
     _controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 3600));
-
-    textController = TextEditingController();
     focusNode = FocusNode();
+    focusNodePassword = FocusNode();
   }
 
   double lerp(double min, double max) =>
       lerpDouble(min, max, _controller.value);
 
   int _timesTapped = 0;
-  TextEditingController textController;
-  FocusNode focusNode;
 
   @override
   void dispose() {
     _controller.dispose();
-    textController.dispose();
+    emailTextController.dispose();
+    passwordTextController.dispose();
     super.dispose();
   }
 
@@ -67,11 +70,9 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
               ),
               child: Stack(
                 children: <Widget>[
-                  //MenuButton(),
-                  _builtGetMoving(),
-                  _builtSocial(),
-                  _builtFloatingButton(),
-                  _builtCreateAccount(),
+                  
+                  
+                  _builtPassField(),
                   Padding(
                     padding: EdgeInsets.all(24),
                     child: Column(
@@ -80,35 +81,38 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
                         SizedBox(
                           height: 50,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text("+244"),
-                            SizedBox(
-                              width: 10,
+                        Expanded(
+                            child: GestureDetector(
+                          onTap: _toogle,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: IgnorePointer(
+                              child: TextField(
+                                  focusNode: focusNode,
+                                  controller: emailTextController,
+                                  keyboardType: TextInputType.text,
+                                  onSubmitted: (text) {
+                                  FocusScope.of(context).requestFocus(focusNodePassword);
+                                },
+                                  decoration: InputDecoration(
+                                      prefixIcon: Container(
+                                        width: 50,
+                                        child: Icon(Icons.email),
+                                      ),
+                                      border: InputBorder.none,
+                                      labelText: "Enter your email",
+                                      labelStyle: TextStyle(fontSize: 20))),
                             ),
-                            Expanded(
-                                child: GestureDetector(
-                              onTap: _toogle,
-                              child: Container(
-                                color: Colors.transparent,
-                                child: IgnorePointer(
-                                  child: TextField(
-                                      focusNode: focusNode,
-                                      controller: textController,
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          labelText: "Enter your mobile number",
-                                          labelStyle: TextStyle(fontSize: 20))),
-                                ),
-                              ),
-                            )),
-                          ],
-                        )
+                          ),
+                        )),
                       ],
                     ),
                   ),
+                  _builtFloatingButton(),
+                  //_builtCreateAccount(),
+                  //MenuButton(),
+                  _builtGetMoving(),
+                  _builtSocial(),
                 ],
               ),
             ),
@@ -133,6 +137,12 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
   Widget _builtGetMoving() {
     return CreateGetMoving(
       isVisible: _controller.status != AnimationStatus.completed,
+    );
+  }
+
+  Widget _builtPassField() {
+    return CreatePassField(
+      isVisible: _controller.status == AnimationStatus.completed,
     );
   }
 
@@ -167,6 +177,7 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
     final bool isOpen = _controller.status == AnimationStatus.completed;
     print(isOpen.toString());
     _controller.fling(velocity: 0.1); //isOpen ? -2 :
+
     FocusScope.of(context).requestFocus(focusNode);
   }
 }
@@ -265,6 +276,46 @@ class CreateGetMoving extends StatelessWidget {
   }
 }
 
+class CreatePassField extends StatelessWidget {
+  final bool isVisible;
+
+  const CreatePassField({Key key, this.isVisible}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    void _reqFocusPassword() {
+      FocusScope.of(context).requestFocus(focusNodePassword);
+    }
+
+    return Positioned(
+        top: 160,
+        left: 30,
+        child: AnimatedOpacity(
+            opacity: isVisible ? 1 : 0,
+            duration: Duration(milliseconds: 200),
+            child: GestureDetector(
+              onTap: _reqFocusPassword,
+              child: Container(
+                width: 600,
+                child: IgnorePointer(
+                  child: TextField(
+                      focusNode: focusNodePassword,
+                      controller: passwordTextController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          prefixIcon: Container(
+                            width: 50,
+                            child: Icon(Icons.lock),
+                          ),
+                          border: InputBorder.none,
+                          labelText: "Enter your password",
+                          labelStyle: TextStyle(fontSize: 20))),
+                ),
+              ),
+            )));
+  }
+}
+
 class CreateSocialNetwork extends StatelessWidget {
   final bool isVisible;
 
@@ -273,15 +324,18 @@ class CreateSocialNetwork extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 30,
-      left: 30,
-      child: AnimatedOpacity(
+        bottom: 30,
+        left: 30,
+        child: AnimatedOpacity(
           opacity: isVisible ? 1 : 0,
           duration: Duration(milliseconds: 200),
           child: GestureDetector(
-              onTap: () {},
-              child: Text("Or connect with social",
-                  style: TextStyle(fontSize: 18, color: Colors.blue)))),
-    );
+              onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()));
+            },
+              child: Text("Or create an account",
+                  style: TextStyle(fontSize: 18, color: Colors.blue))),
+        ));
   }
 }
