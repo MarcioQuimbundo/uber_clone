@@ -4,7 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 class FireAuth {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  void signUp(String email, String pass, String name, String phone, Function onSuccess, Function(String) onRegisterError) {
+  void signUp(String email, String pass, String name, String phone,
+      Function onSuccess, Function(String) onRegisterError) {
     _firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: pass)
         .then((user) {
@@ -12,11 +13,12 @@ class FireAuth {
       _createUser(user.uid, name, phone, onSuccess, onRegisterError);
       print(user);
     }).catchError((err) {
-      // TODO
+      _onSignupError(err.code, onRegisterError);
     });
   }
 
-  _createUser(String userId, String name, String phone, Function onSuccess, Function(String) onRegisterError) {
+  _createUser(String userId, String name, String phone, Function onSuccess,
+      Function(String) onRegisterError) {
     var user = {
       "name": name,
       "phone": phone,
@@ -29,6 +31,18 @@ class FireAuth {
     }).catchError((err) {
       //TODO
       onRegisterError("Signup Fail, please try again");
+    });
+  }
+
+  void signIn(String email, String pass, Function onSuccess,
+      Function(String) onSignInError) {
+    _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: pass)
+        .then((user) {
+      print("on SignIn in success");
+      onSuccess();
+    }).catchError((err) {
+      onSignInError("Signin fail, please try again");
     });
   }
 

@@ -1,6 +1,8 @@
 import 'package:uber_rider/src/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_rider/src/ui/home.dart';
+import 'package:uber_rider/src/ui/widgets/loading_dialog.dart';
+import 'package:uber_rider/src/ui/widgets/msg_dialog.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -150,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onSignupClicked() {
-    print("teste");
+    //print("teste");
     var isValid = authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _phoneController.text);
     print(isValid);
@@ -158,12 +160,16 @@ class _RegisterPageState extends State<RegisterPage> {
       //print(isValid);
       // create user
       //loadgin dialog
+      LoadgingDialog.showLoadingDialog(context, "Loading...");
       return authBloc.signUp(_emailController.text, _passController.text,
           _phoneController.text, _nameController.text, () {
+          LoadgingDialog.hideLoadingDialog(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MyHomePage()));
       }, (msg) {
         //show msg dialog
+        LoadgingDialog.hideLoadingDialog(context);
+        MsgDialog.showMsgDialog(context, "SignUp", msg);
       });
     }
     return;

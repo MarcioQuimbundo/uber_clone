@@ -236,8 +236,10 @@ class CreateAccountLabel extends StatelessWidget {
         opacity: isVisible ? 1 : 0,
         duration: Duration(milliseconds: 200),
         child: GestureDetector(
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RegisterPage())),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()));
+            },
             child: Text("Create an Account",
                 style: TextStyle(fontSize: 18, color: Colors.blue))),
       ),
