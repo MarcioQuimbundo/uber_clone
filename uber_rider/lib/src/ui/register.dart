@@ -119,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: RawMaterialButton(
                     fillColor: Colors.black,
                     elevation: 5.0,
-                    onPressed: ()=>_onSignupClicked(),
+                    onPressed: () => _onSignupClicked(),
                     child: Text(
                       "Signup",
                       style: TextStyle(color: Colors.white),
@@ -153,12 +153,17 @@ class _RegisterPageState extends State<RegisterPage> {
     print("teste");
     var isValid = authBloc.isValid(_nameController.text, _emailController.text,
         _passController.text, _phoneController.text);
-        print(isValid);
+    print(isValid);
     if (isValid) {
       //print(isValid);
       // create user
-      return authBloc.signUp(_emailController.text, _passController.text, _phoneController.text, _nameController.text,(){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> MyHomePage()));
+      //loadgin dialog
+      return authBloc.signUp(_emailController.text, _passController.text,
+          _phoneController.text, _nameController.text, () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MyHomePage()));
+      }, (msg) {
+        //show msg dialog
       });
     }
     return;
