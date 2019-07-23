@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:uber_rider/src/ui/register.dart';
 
 const double minHeight = 220;
 
@@ -134,6 +135,7 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
       isVisible: _controller.status != AnimationStatus.completed,
     );
   }
+
   Widget _builtSocial() {
     return CreateSocialNetwork(
       isVisible: _controller.status != AnimationStatus.completed,
@@ -187,7 +189,8 @@ class FloatinButtonLogin extends StatelessWidget {
   final double bottomMargin;
   final bool isVisible;
 
-  const FloatinButtonLogin({Key key, this.bottomMargin, this.isVisible}) : super(key: key);
+  const FloatinButtonLogin({Key key, this.bottomMargin, this.isVisible})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +201,8 @@ class FloatinButtonLogin extends StatelessWidget {
         opacity: isVisible ? 1 : 0,
         duration: Duration(milliseconds: 200),
         child: RawMaterialButton(
-          onPressed: (){
-             Navigator.pushNamed(context, "/home");
+          onPressed: () {
+            Navigator.pushNamed(context, "/home");
           },
           splashColor: Colors.white,
           fillColor: Colors.black,
@@ -208,10 +211,10 @@ class FloatinButtonLogin extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Icon(
-                Icons.arrow_forward,
-                size: 30.0,
-                color: Colors.white,
-              ),
+              Icons.arrow_forward,
+              size: 30.0,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -232,7 +235,11 @@ class CreateAccountLabel extends StatelessWidget {
       child: AnimatedOpacity(
         opacity: isVisible ? 1 : 0,
         duration: Duration(milliseconds: 200),
-        child: GestureDetector(onTap: (){}, child: Text("Create an Account", style: TextStyle(fontSize: 18, color: Colors.blue))),
+        child: GestureDetector(
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => RegisterPage())),
+            child: Text("Create an Account",
+                style: TextStyle(fontSize: 18, color: Colors.blue))),
       ),
     );
   }
@@ -246,14 +253,13 @@ class CreateGetMoving extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 20,
-      left: 30,
-      child: AnimatedOpacity(
-        opacity: isVisible ? 1 : 0,
-        duration: Duration(milliseconds: 200),
-        child: Text("Get moving with Uber",
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500)))
-    );
+        top: 20,
+        left: 30,
+        child: AnimatedOpacity(
+            opacity: isVisible ? 1 : 0,
+            duration: Duration(milliseconds: 200),
+            child: Text("Get moving with Uber",
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500))));
   }
 }
 
@@ -268,9 +274,12 @@ class CreateSocialNetwork extends StatelessWidget {
       bottom: 30,
       left: 30,
       child: AnimatedOpacity(
-        opacity: isVisible ? 1 : 0,
-        duration: Duration(milliseconds: 200),
-        child: GestureDetector(onTap: (){}, child: Text("Or connect with social", style: TextStyle(fontSize: 18, color: Colors.blue)))),
+          opacity: isVisible ? 1 : 0,
+          duration: Duration(milliseconds: 200),
+          child: GestureDetector(
+              onTap: () {},
+              child: Text("Or connect with social",
+                  style: TextStyle(fontSize: 18, color: Colors.blue)))),
     );
   }
 }
