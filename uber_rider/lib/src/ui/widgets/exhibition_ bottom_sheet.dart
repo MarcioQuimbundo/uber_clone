@@ -2,7 +2,11 @@ import 'dart:ui';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:uber_rider/main.dart';
+import 'package:uber_rider/src/ui/home.dart';
 import 'package:uber_rider/src/ui/register.dart';
+import 'package:uber_rider/src/ui/widgets/loading_dialog.dart';
+import 'package:uber_rider/src/ui/widgets/msg_dialog.dart';
 
 const double minHeight = 220;
 
@@ -13,6 +17,8 @@ class ExhibitionBottomSheet extends StatefulWidget {
 
 TextEditingController emailTextController;
 TextEditingController passwordTextController;
+String passText;
+String emailText;
 FocusNode focusNode;
 FocusNode focusNodePassword;
 
@@ -70,8 +76,6 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
               ),
               child: Stack(
                 children: <Widget>[
-                  
-                  
                   _builtPassField(),
                   Padding(
                     padding: EdgeInsets.all(24),
@@ -88,12 +92,18 @@ class _ExhibitionBottomSheetState extends State<ExhibitionBottomSheet>
                             color: Colors.transparent,
                             child: IgnorePointer(
                               child: TextField(
+                                  onChanged: (text) {
+                                    setState(() {
+                                      emailText = text;
+                                    });
+                                  },
                                   focusNode: focusNode,
                                   controller: emailTextController,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.emailAddress,
                                   onSubmitted: (text) {
-                                  FocusScope.of(context).requestFocus(focusNodePassword);
-                                },
+                                    FocusScope.of(context)
+                                        .requestFocus(focusNodePassword);
+                                  },
                                   decoration: InputDecoration(
                                       prefixIcon: Container(
                                         width: 50,
@@ -212,9 +222,7 @@ class FloatinButtonLogin extends StatelessWidget {
         opacity: isVisible ? 1 : 0,
         duration: Duration(milliseconds: 200),
         child: RawMaterialButton(
-          onPressed: () {
-            Navigator.pushNamed(context, "/home");
-          },
+          onPressed: () => _onLoginClick(context),
           splashColor: Colors.white,
           fillColor: Colors.black,
           elevation: 15.0,
@@ -231,6 +239,21 @@ class FloatinButtonLogin extends StatelessWidget {
       ),
     );
   }
+}
+
+void _onLoginClick(BuildContext context) {
+  String email = emailText;
+  String pass = passText;
+  var authBloc = MyApp.of(context).authBloc;
+  LoadgingDialog.showLoadingDialog(context, "Loading . . .");
+  authBloc.signIn(email, pass, () {
+    LoadgingDialog.hideLoadingDialog(context);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => MyHomePage()));
+  }, (msg) {
+    LoadgingDialog.hideLoadingDialog(context);
+    MsgDialog.showMsgDialog(context, "Login", msg);
+  });
 }
 
 class CreateAccountLabel extends StatelessWidget {
@@ -276,11 +299,16 @@ class CreateGetMoving extends StatelessWidget {
   }
 }
 
-class CreatePassField extends StatelessWidget {
+class CreatePassField extends StatefulWidget {
   final bool isVisible;
 
   const CreatePassField({Key key, this.isVisible}) : super(key: key);
 
+  @override
+  _CreatePassFieldState createState() => _CreatePassFieldState();
+}
+
+class _CreatePassFieldState extends State<CreatePassField> {
   @override
   Widget build(BuildContext context) {
     void _reqFocusPassword() {
@@ -291,7 +319,7 @@ class CreatePassField extends StatelessWidget {
         top: 160,
         left: 30,
         child: AnimatedOpacity(
-            opacity: isVisible ? 1 : 0,
+            opacity: widget.isVisible ? 1 : 0,
             duration: Duration(milliseconds: 200),
             child: GestureDetector(
               onTap: _reqFocusPassword,
@@ -301,7 +329,15 @@ class CreatePassField extends StatelessWidget {
                   child: TextField(
                       focusNode: focusNodePassword,
                       controller: passwordTextController,
-                      keyboardType: TextInputType.number,
+                      onChanged: (text) {
+                        setState(() {
+                          passText = text;
+                        });
+                      },
+                      onSubmitted: (text) {
+                        _onLoginClick(context);
+                      },
+                      keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                           prefixIcon: Container(
                             width: 50,
@@ -331,9 +367,9 @@ class CreateSocialNetwork extends StatelessWidget {
           duration: Duration(milliseconds: 200),
           child: GestureDetector(
               onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()));
-            },
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterPage()));
+              },
               child: Text("Or create an account",
                   style: TextStyle(fontSize: 18, color: Colors.blue))),
         ));

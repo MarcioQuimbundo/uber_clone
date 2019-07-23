@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uber_rider/src/blocs/auth_bloc.dart';
 import 'package:uber_rider/src/ui/add_card.dart';
 import 'package:uber_rider/src/ui/add_payment_method.dart';
 import 'package:uber_rider/src/ui/free_rides.dart';
@@ -10,12 +11,9 @@ import 'package:uber_rider/src/ui/select_issue.dart';
 import 'package:uber_rider/src/ui/settings.dart';
 import 'package:uber_rider/src/ui/your_trips.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+void main() => runApp(MyApp(
+    AuthBloc(),
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Uber Clone',
       theme: ThemeData(
@@ -34,6 +32,19 @@ class MyApp extends StatelessWidget {
         '/help': (context) => HelpPage(),
         '/settings': (context) => SettingsPage(),
       },
-    );
+    )));
+
+class MyApp extends InheritedWidget {
+  final AuthBloc authBloc;
+  final Widget child;
+  MyApp(this.authBloc, this.child) : super(child: child);
+
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) {
+    return false;
+  }
+
+  static MyApp of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(MyApp);
   }
 }
