@@ -1,4 +1,0 @@
-[0604/113845.938:ERROR:file_io_win.cc(170)] CreateFile C:\Users\MQUIMB~1\AppData\Local\Temp\c09927bc-854c-11e9-949e-d89c679d48da\Crashpad\reports\1b2f1ca2-a370-4a23-b03f-e13ae6a527a9.dmp: O sistema não conseguiu localizar o caminho especificado. (0x3)
-[0604/113846.214:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
-[0604/145201.601:ERROR:file_io_win.cc(170)] CreateFile C:\Users\MQUIMB~1\AppData\Local\Temp\c09927bc-854c-11e9-949e-d89c679d48da\Crashpad\reports\7e270ad9-c9c6-4f99-b023-f7aa63ca7c35.dmp: O sistema não conseguiu localizar o caminho especificado. (0x3)
-[0604/145201.674:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed

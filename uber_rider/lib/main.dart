@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:uber_rider/src/blocs/auth_bloc.dart';
-import 'package:uber_rider/src/ui/add_card.dart';
-import 'package:uber_rider/src/ui/add_payment_method.dart';
-import 'package:uber_rider/src/ui/free_rides.dart';
-import 'package:uber_rider/src/ui/help.dart';
-import 'package:uber_rider/src/ui/home.dart';
-import 'package:uber_rider/src/ui/login.dart';
-import 'package:uber_rider/src/ui/payment.dart';
-import 'package:uber_rider/src/ui/select_issue.dart';
-import 'package:uber_rider/src/ui/settings.dart';
-import 'package:uber_rider/src/ui/your_trips.dart';
+import 'package:uber_rider/src/ui/pages/add_payment_method.dart';
+import 'package:uber_rider/src/ui/pages/free_rides.dart';
+import 'package:uber_rider/src/ui/pages/help.dart';
+import 'package:uber_rider/src/ui/pages/home.dart';
+import 'package:uber_rider/src/ui/pages/login.dart';
+import 'package:uber_rider/src/ui//pages/add_card.dart';
+import 'package:uber_rider/src/ui/pages/payment.dart';
+import 'package:uber_rider/src/ui/pages/select_issue.dart';
+import 'package:uber_rider/src/ui/pages/settings.dart'; 
+import 'package:uber_rider/src/ui/pages/your_trips.dart';
 
 void main() => runApp(MyApp(
     AuthBloc(),
