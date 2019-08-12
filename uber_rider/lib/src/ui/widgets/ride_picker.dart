@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:uber_rider/src/model/place_item_res.dart';
+import 'package:uber_rider/src/ui/pages/ride_picker_page.dart';
 
 class RidePicker extends StatefulWidget {
-  RidePicker({Key key}) : super(key: key);
+  final Function(PlaceItemRes, bool) onSelected;
+  RidePicker(this.onSelected);
 
   _RidePickerState createState() => _RidePickerState();
 }
 
 class _RidePickerState extends State<RidePicker> {
+  PlaceItemRes fromAddress;
+  PlaceItemRes toAddress;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +29,16 @@ class _RidePickerState extends State<RidePicker> {
             width: double.infinity,
             height: 50,
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RidePickerPage(
+                            fromAddress == null ? "" : fromAddress.name,
+                            (place, isFrom) {
+                          widget.onSelected(place, isFrom);
+                          fromAddress = place;
+                          setState(() {});
+                        }, true)));
+              },
               child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,
@@ -48,13 +62,16 @@ class _RidePickerState extends State<RidePicker> {
                       width: 40,
                       height: 50,
                       child: Center(
-                        child: Icon(Icons.close, size: 18,),
+                        child: Icon(
+                          Icons.close,
+                          size: 18,
+                        ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 40.0, right: 50.0),
                       child: Text(
-                        "Centro de Logística do Talatona, Luanda",
+                        fromAddress == null ? "from" : fromAddress.name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
@@ -69,7 +86,16 @@ class _RidePickerState extends State<RidePicker> {
             width: double.infinity,
             height: 50,
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        RidePickerPage(toAddress == null ? '' : toAddress.name,
+                            (place, isFrom) {
+                          widget.onSelected(place, isFrom);
+                          toAddress = place;
+                          setState(() {});
+                        }, false)));
+              },
               child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,
@@ -93,13 +119,16 @@ class _RidePickerState extends State<RidePicker> {
                       width: 40,
                       height: 50,
                       child: Center(
-                        child: Icon(Icons.close, size: 18,),
+                        child: Icon(
+                          Icons.close,
+                          size: 18,
+                        ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 40.0, right: 50.0),
                       child: Text(
-                        "Centro de Logística do Talatona, Luanda",
+                        toAddress == null ? "from" : toAddress.name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),

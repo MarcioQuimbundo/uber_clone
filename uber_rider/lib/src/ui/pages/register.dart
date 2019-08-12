@@ -1,6 +1,6 @@
 import 'package:uber_rider/src/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_rider/src/ui/home.dart';
+import 'package:uber_rider/src/ui/pages/home.dart';
 import 'package:uber_rider/src/ui/widgets/loading_dialog.dart';
 import 'package:uber_rider/src/ui/widgets/msg_dialog.dart';
 

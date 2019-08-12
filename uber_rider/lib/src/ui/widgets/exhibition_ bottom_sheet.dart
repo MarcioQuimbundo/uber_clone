@@ -1,10 +1,9 @@
 import 'dart:ui';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 import 'package:uber_rider/main.dart';
-import 'package:uber_rider/src/ui/home.dart';
-import 'package:uber_rider/src/ui/register.dart';
+import 'package:uber_rider/src/ui/pages/home.dart';
+import 'package:uber_rider/src/ui/pages/register.dart';
 import 'package:uber_rider/src/ui/widgets/loading_dialog.dart';
 import 'package:uber_rider/src/ui/widgets/msg_dialog.dart';
 
