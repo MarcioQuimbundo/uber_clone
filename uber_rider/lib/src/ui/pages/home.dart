@@ -4,8 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:flutter/services.dart';
 import 'package:uber_rider/src/model/place_item_res.dart';
-import 'package:uber_rider/src/model/step_res.dart';
-import 'package:uber_rider/src/repository/place_service.dart';
 import 'package:uber_rider/src/ui/widgets/functionalButton.dart';
 import 'package:uber_rider/src/ui/widgets/home_menu_drawer.dart';
 import 'package:uber_rider/src/ui/widgets/ride_picker.dart';
@@ -24,19 +22,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Completer<GoogleMapController> _completer = Completer();
   MapUtil mapUtil = MapUtil();
   Location _locationService = Location();
-  var currentLocation = const LatLng(-8.8301849, 13.2474807);
-  LatLng _center = const LatLng(-8.8301849, 13.2474807);
+  LatLng currentLocation;
+  LatLng _center = LatLng(-8.913025, 13.202462);
   bool _permission = false;
   List<Marker> _markers = List();
   List<Polyline> routes = new List();
-  int _polylineIdCounter = 1;
   bool done = false;
   String error;
-
-  static final CameraPosition _cameraPosition = CameraPosition(
-    target: LatLng(-8.913025, 13.202462),
-    zoom: 17.0,
-  );
 
   getCurrentLocation() async {
     currentLocation = await mapUtil.getCurrentLocation();
@@ -69,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
               destin.latitude.toString() + destin.longitude.toString()),
           consumeTapEvents: true,
           color: Colors.black,
-          width: 5,
+          width: 2,
           points: path,
         );
 
@@ -99,19 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    addPolyline(LatLng(-8.913025, 13.202462));
-    
-    _center = LatLng(-8.913025, 13.202462);
-
-    Marker marker = Marker(
-      markerId: MarkerId("routes"),
-      position: LatLng(-8.913025, 13.202462),
-      infoWindow: InfoWindow(title: "trace route"),
-    );
-    setState(() {
-      _markers.add(marker);
-    });
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
@@ -158,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-                  child: Container()//RidePicker(onPlaceSelected),
+                  child: RidePicker(onPlaceSelected),
                 )
               ],
             ),
@@ -194,6 +173,37 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void onPlaceSelected(PlaceItemRes place, bool fromAddress) {
+    var mkId = fromAddress ? "from_addres" : "to_address";
+
+    _markers.remove(mkId);
+    if (_markers.length == 1) {
+      addPolyline(LatLng(place.lat, place.lng));
+    } else {
+      routes.clear();
+    }
+
+    if (_markers.length > 1) _markers.clear();
+
+
+    //_center = LatLng(place.lat, place.lng);
+    Marker marker = Marker(
+      markerId: MarkerId(mkId),
+      draggable: true,
+      position: LatLng(place.lat, place.lng),
+      infoWindow: InfoWindow(title: mkId),
+    );
+    setState(() {
+      if (mkId == "from_addres") {
+        currentLocation = LatLng(place.lat, place.lng);
+        _center = LatLng(currentLocation.latitude, currentLocation.longitude);
+        _markers[0] = (marker);
+        done = true;
+      } else {
+        _markers[1] = (marker);
+      }
+    });
+  }
 
   initPlatformState() async {
     await _locationService.changeSettings(
@@ -217,7 +227,8 @@ class _MyHomePageState extends State<MyHomePage> {
           if (mounted) {
             setState(() {
               currentLocation = LatLng(location.latitude, location.longitude);
-              //_center = LatLng(currentLocation.latitude, currentLocation.longitude);
+              _center =
+                  LatLng(currentLocation.latitude, currentLocation.longitude);
               _markers.add(marker);
               done = true;
             });
