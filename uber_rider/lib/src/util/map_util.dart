@@ -6,8 +6,6 @@ import 'package:google_maps_webservice/directions.dart' as APIDirections;
 
 class MapUtil{
 
- //final directions = APIDirections.GoogleMapsDirections(apiKey: 'AIzaSyAnwXVUtvdT1yxcALkHzZAeCWq8O6AYAkE');
- //final geolocation = APIGeolocation.GoogleMapsGeolocation(apiKey: 'AIzaSyAnwXVUtvdT1yxcALkHzZAeCWq8O6AYAkE');
   final directions = APIDirections.GoogleMapsDirections(apiKey: 'AIzaSyDPaFRwkTfLGUgDovW6ZrldT9e77mYR7sU');
   final geolocation = APIGeolocation.GoogleMapsGeolocation(apiKey: 'AIzaSyDPaFRwkTfLGUgDovW6ZrldT9e77mYR7sU');
 
