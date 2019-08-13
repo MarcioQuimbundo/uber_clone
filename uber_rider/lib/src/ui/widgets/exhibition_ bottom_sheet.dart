@@ -337,6 +337,7 @@ class _CreatePassFieldState extends State<CreatePassField> {
                         _onLoginClick(context);
                       },
                       keyboardType: TextInputType.text,
+                      obscureText: true,
                       decoration: InputDecoration(
                           prefixIcon: Container(
                             width: 50,

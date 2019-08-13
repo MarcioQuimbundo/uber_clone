@@ -145,8 +145,11 @@ class _MyHomePageState extends State<MyHomePage> {
         _center = LatLng(currentLocation.latitude, currentLocation.longitude);
         _markers[0] = (marker);
         done = true;
-      } else {
-        _markers[1] = (marker);
+      } else if(mkId == "to_address") {
+        //_markers[1] = (marker);
+        _markers.add(marker);
+        List mmmm = _markers;
+        print(mmmm);
       }
     });
   }
