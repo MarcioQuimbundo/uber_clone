@@ -30,59 +30,6 @@ class _MyHomePageState extends State<MyHomePage> {
   bool done = false;
   String error;
 
-  getCurrentLocation() async {
-    currentLocation = await mapUtil.getCurrentLocation();
-    _center = LatLng(currentLocation.latitude, currentLocation.longitude);
-    Marker marker = Marker(
-      markerId: MarkerId('location'),
-      position: _center,
-      infoWindow: InfoWindow(title: 'My Location'),
-    );
-    setState(() {
-      _markers.add(marker);
-      done = true;
-    });
-  }
-
-  addPolyline(LatLng destin) async {
-    if (done) {
-      mapUtil
-          .getRoutePath(
-              currentLocation, new LatLng(destin.latitude, destin.longitude))
-          .then((locations) {
-        List<LatLng> path = new List();
-
-        locations.forEach((location) {
-          path.add(new LatLng(location.latitude, location.longitude));
-        });
-
-        final Polyline polyline = Polyline(
-          polylineId: PolylineId(
-              destin.latitude.toString() + destin.longitude.toString()),
-          consumeTapEvents: true,
-          color: Colors.black,
-          width: 2,
-          points: path,
-        );
-
-        setState(() {
-          routes.add(polyline);
-        });
-      });
-    } else {
-      print("impossible trace route, verify if your location is on");
-      /*Fluttertoast.showToast(
-        msg: "Impossível traçar rota. Verifique se a localização esta activa",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 2,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 14.0
-      );*/
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -174,27 +121,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onPlaceSelected(PlaceItemRes place, bool fromAddress) {
-    var mkId = fromAddress ? "from_addres" : "to_address";
+    var mkId = fromAddress ? "from_addresss" : "to_address";
 
+    _addMarker(mkId, place);
+    addPolyline();
+  }
+
+  void _addMarker(String mkId, PlaceItemRes place) async {
+    // remove old
     _markers.remove(mkId);
-    if (_markers.length == 1) {
-      addPolyline(LatLng(place.lat, place.lng));
-    } else {
-      routes.clear();
-    }
+    //_mapController.clearMarkers();
 
-    if (_markers.length > 1) _markers.clear();
-
-
-    //_center = LatLng(place.lat, place.lng);
     Marker marker = Marker(
       markerId: MarkerId(mkId),
       draggable: true,
       position: LatLng(place.lat, place.lng),
       infoWindow: InfoWindow(title: mkId),
     );
+
     setState(() {
-      if (mkId == "from_addres") {
+      if (mkId == "from_addresss") {
         currentLocation = LatLng(place.lat, place.lng);
         _center = LatLng(currentLocation.latitude, currentLocation.longitude);
         _markers[0] = (marker);
@@ -203,6 +149,64 @@ class _MyHomePageState extends State<MyHomePage> {
         _markers[1] = (marker);
       }
     });
+  }
+
+  getCurrentLocation() async {
+    currentLocation = await mapUtil.getCurrentLocation();
+    _center = LatLng(currentLocation.latitude, currentLocation.longitude);
+    Marker marker = Marker(
+      markerId: MarkerId('location'),
+      position: _center,
+      infoWindow: InfoWindow(title: 'My Location'),
+    );
+    setState(() {
+      _markers.add(marker);
+      done = true;
+    });
+  }
+
+  addPolyline() async {
+    if (done) {
+      //  remove old polyline
+      routes.clear();
+
+      if (_markers.length > 1) {
+        mapUtil
+            .getRoutePath(
+                LatLng(_markers[0].position.latitude, _markers[0].position.longitude), LatLng(_markers[1].position.latitude, _markers[1].position.longitude))
+            .then((locations) {
+          List<LatLng> path = new List();
+
+          locations.forEach((location) {
+            path.add(new LatLng(location.latitude, location.longitude));
+          });
+
+          final Polyline polyline = Polyline(
+            polylineId: PolylineId(
+                _markers[1].position.latitude.toString() + _markers[1].position.longitude.toString()),
+            consumeTapEvents: true,
+            color: Colors.black,
+            width: 2,
+            points: path,
+          );
+
+          setState(() {
+            routes.add(polyline);
+          });
+        });
+      }
+    } else {
+      print("impossible trace route, verify if your location is on");
+      /*Fluttertoast.showToast(
+        msg: "Impossível traçar rota. Verifique se a localização esta activa",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 2,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 14.0
+      );*/
+    }
   }
 
   initPlatformState() async {
