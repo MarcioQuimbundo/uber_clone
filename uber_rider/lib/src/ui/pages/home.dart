@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   addPolyline() async {
-      routes.clear();
+      //routes.clear();
       if (_markers.length > 1) {
         mapUtil
             .getRoutePath(
